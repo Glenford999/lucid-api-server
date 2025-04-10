@@ -1,19 +1,25 @@
-FROM node:18-alpine
+FROM node:18-slim
 
-# Create app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# Copy package files and install dependencies
 COPY package*.json ./
+RUN npm install --only=production
 
-RUN npm ci --only=production
-
-# Bundle app source
+# Copy the application code
 COPY . .
 
-# The app binds to port 8080
+# Create a default .env file if one doesn't exist
+RUN touch .env
+
+# Set environment variables with defaults
+ENV NODE_ENV=production
+ENV PORT=8080
+ENV DEEPSEEK_API_ENDPOINT=https://api.deepseek.com
+# API keys will be provided during deployment
+
+# Expose the port
 EXPOSE 8080
 
-# Use an entrypoint script that can handle environment variables
-CMD ["node", "server.js"]
+# Start the server
+CMD ["node", "server.js"] 
