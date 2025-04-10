@@ -1,20 +1,19 @@
-FROM node:18-slim
+FROM node:18-alpine
 
+# Create app directory
 WORKDIR /usr/src/app
 
-# Copy package files and install dependencies
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json ./
-RUN npm install --only=production
 
-# Copy the application code
+RUN npm ci --only=production
+
+# Bundle app source
 COPY . .
 
-# Set environment variables
-ENV NODE_ENV=production
-ENV PORT=8080
-
-# Expose the port
+# The app binds to port 8080
 EXPOSE 8080
 
-# Start the server
-CMD ["node", "server.js"] 
+# Use an entrypoint script that can handle environment variables
+CMD ["node", "server.js"]
