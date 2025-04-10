@@ -10,8 +10,11 @@ const app = express();
 
 // Security middleware
 app.use(helmet());
-app.use(cors());
-app.use(express.json());
+   app.use(cors({ 
+     origin: '*',
+     methods: ['GET', 'POST', 'OPTIONS'],
+     allowedHeaders: ['Content-Type', 'Authorization']
+   }));app.use(express.json());
 
 // Rate limiter setup
 const rateLimiter = new RateLimiterMemory({
