@@ -9,12 +9,19 @@ require('dotenv').config();
 const app = express();
 
 // Security middleware
-app.use(helmet());
-   app.use(cors({ 
-     origin: '*',
-     methods: ['GET', 'POST', 'OPTIONS'],
-     allowedHeaders: ['Content-Type', 'Authorization']
-   }));app.use(express.json());
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+  contentSecurityPolicy: false
+}));
+
+// Updated CORS configuration to be more permissive
+app.use(cors({ 
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.use(express.json());
 
 // Rate limiter setup
 const rateLimiter = new RateLimiterMemory({
@@ -227,4 +234,4 @@ app.post('/api/chat', rateLimiterMiddleware, async (req, res) => {
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-}); 
+});
