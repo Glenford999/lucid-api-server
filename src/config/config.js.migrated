@@ -1,0 +1,29 @@
+require('dotenv').config();
+
+module.exports = {
+  // Server configuration
+  port: process.env.PORT || 8080,
+  nodeEnv: process.env.NODE_ENV || 'development',
+  
+  // API Endpoints
+  deepseekApiEndpoint: process.env.DEEPSEEK_API_ENDPOINT || 'https://api.deepseek.com',
+  deepseekApiKey: process.env.DEEPSEEK_API_KEY || '',
+  
+  // Web search configuration
+  disableSyntheticFallback: process.env.DISABLE_SYNTHETIC_FALLBACK === 'true',
+  
+  // CORS Configuration
+  allowedOrigins: process.env.ALLOWED_ORIGINS || '*',
+  
+  // Cache configuration
+  cacheEnabled: process.env.CACHE_ENABLED !== 'false',
+  cacheTtl: parseInt(process.env.CACHE_TTL || '86400000', 10), // 24 hours in milliseconds
+  
+  // Rate limiting configuration
+  rateLimitRequests: parseInt(process.env.RATE_LIMIT_REQUESTS || '60', 10), // requests per minute
+  
+  // Logging configuration
+  logLevel: process.env.LOG_LEVEL || 'info',
+  structuredLogging: process.env.STRUCTURED_LOGGING === 'true',
+  omitHealthLog: process.env.OMIT_HEALTH_LOG === 'true'
+}; 
