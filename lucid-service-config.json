@@ -1,0 +1,190 @@
+{
+  "apiVersion": "serving.knative.dev/v1",
+  "kind": "Service",
+  "metadata": {
+    "annotations": {
+      "run.googleapis.com/build-enable-automatic-updates": "false",
+      "run.googleapis.com/build-id": "2b77c1de-b818-47b6-8fbc-3dc7df50fd8e",
+      "run.googleapis.com/build-image-uri": "europe-west2-docker.pkg.dev/rosy-etching-456415-c7/cloud-run-source-deploy/lucid-api-server",
+      "run.googleapis.com/build-name": "projects/383596869952/locations/europe-west2/builds/2b77c1de-b818-47b6-8fbc-3dc7df50fd8e",
+      "run.googleapis.com/build-source-location": "gs://run-sources-rosy-etching-456415-c7-europe-west2/services/lucid-api-server/1745141700.469764-6d77a9aa5c034fcf8ce0c3cffb2959c7.zip#1745141700962022",
+      "run.googleapis.com/client-name": "cloud-console",
+      "run.googleapis.com/ingress": "all",
+      "run.googleapis.com/ingress-status": "all",
+      "run.googleapis.com/invoker-iam-disabled": "true",
+      "run.googleapis.com/operation-id": "798fd44e-3529-4e32-88e3-03377e47c83f",
+      "run.googleapis.com/urls": "[\"https://lucid-api-server-383596869952.europe-west2.run.app\",\"https://lucid-api-server-delggdwi6q-nw.a.run.app\"]",
+      "serving.knative.dev/creator": "leo@search-lucid.com",
+      "serving.knative.dev/lastModifier": "leo@search-lucid.com"
+    },
+    "creationTimestamp": "2025-04-16T12:32:41.674239Z",
+    "generation": 231,
+    "labels": {
+      "cloud.googleapis.com/location": "europe-west2",
+      "commit-sha": "7f0bf6cb19c6e940fa51daef77c8cceb7304ce56",
+      "gcb-build-id": "35d2c5e9-3021-4a23-996a-8c6c0b7d7689",
+      "gcb-trigger-id": "3d932d30-4345-4545-b63b-d27c845c6491",
+      "gcb-trigger-region": "global",
+      "managed-by": "gcp-cloud-build-deploy-cloud-run",
+      "run.googleapis.com/satisfiesPzs": "true"
+    },
+    "name": "lucid-api-server",
+    "namespace": "383596869952",
+    "resourceVersion": "AAYznhMkisc",
+    "selfLink": "/apis/serving.knative.dev/v1/namespaces/383596869952/services/lucid-api-server",
+    "uid": "7247115a-dcca-42cf-b6e4-e756e910f2f9"
+  },
+  "spec": {
+    "template": {
+      "metadata": {
+        "annotations": {
+          "autoscaling.knative.dev/maxScale": "10",
+          "run.googleapis.com/client-name": "cloud-console",
+          "run.googleapis.com/startup-cpu-boost": "true"
+        },
+        "labels": {
+          "client.knative.dev/nonce": "88326b04-5435-47c7-ba3f-a5b92a36db86",
+          "commit-sha": "7f0bf6cb19c6e940fa51daef77c8cceb7304ce56",
+          "gcb-build-id": "35d2c5e9-3021-4a23-996a-8c6c0b7d7689",
+          "gcb-trigger-id": "3d932d30-4345-4545-b63b-d27c845c6491",
+          "gcb-trigger-region": "global",
+          "managed-by": "gcp-cloud-build-deploy-cloud-run",
+          "run.googleapis.com/startupProbeType": "Custom"
+        }
+      },
+      "spec": {
+        "containerConcurrency": 80,
+        "containers": [
+          {
+            "env": [
+              {
+                "name": "GOOGLE_CLOUD_PROJECT",
+                "value": "rosy-etching-456415-c7"
+              },
+              {
+                "name": "DEEPSEEK_API_ENDPOINT",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "6",
+                    "name": "DEEPSEEK_API_ENDPOINT"
+                  }
+                }
+              },
+              {
+                "name": "DEEPSEEK_API_KEY",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "12",
+                    "name": "DEEPSEEK_API_KEY"
+                  }
+                }
+              },
+              {
+                "name": "OPENAI_API_BASE_URL",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "1",
+                    "name": "OPENAI_API_BASE_URL"
+                  }
+                }
+              },
+              {
+                "name": "OPENAI_API_KEY",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "1",
+                    "name": "OPENAI_API_KEY"
+                  }
+                }
+              },
+              {
+                "name": "API_SERVICE_URL",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "1",
+                    "name": "API_SERVICE_URL"
+                  }
+                }
+              }
+            ],
+            "image": "europe-west2-docker.pkg.dev/rosy-etching-456415-c7/cloud-run-source-deploy/lucid-api-server/lucid-api-server:7f0bf6cb19c6e940fa51daef77c8cceb7304ce56",
+            "livenessProbe": {
+              "failureThreshold": 3,
+              "httpGet": {
+                "path": "/health",
+                "port": 8080
+              },
+              "initialDelaySeconds": 10,
+              "periodSeconds": 10,
+              "timeoutSeconds": 10
+            },
+            "name": "placeholder-1",
+            "ports": [
+              {
+                "containerPort": 8080,
+                "name": "http1"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "1000m",
+                "memory": "512Mi"
+              }
+            },
+            "startupProbe": {
+              "failureThreshold": 3,
+              "httpGet": {
+                "path": "/health",
+                "port": 8080
+              },
+              "initialDelaySeconds": 10,
+              "periodSeconds": 10,
+              "timeoutSeconds": 10
+            }
+          }
+        ],
+        "serviceAccountName": "383596869952-compute@developer.gserviceaccount.com",
+        "timeoutSeconds": 300
+      }
+    },
+    "traffic": [
+      {
+        "latestRevision": true,
+        "percent": 100
+      }
+    ]
+  },
+  "status": {
+    "address": {
+      "url": "https://lucid-api-server-delggdwi6q-nw.a.run.app"
+    },
+    "conditions": [
+      {
+        "lastTransitionTime": "2025-04-25T17:57:59.275207Z",
+        "status": "True",
+        "type": "Ready"
+      },
+      {
+        "lastTransitionTime": "2025-04-25T17:57:58.026905Z",
+        "status": "True",
+        "type": "ConfigurationsReady"
+      },
+      {
+        "lastTransitionTime": "2025-04-25T17:57:59.245352Z",
+        "status": "True",
+        "type": "RoutesReady"
+      }
+    ],
+    "latestCreatedRevisionName": "lucid-api-server-00230-gbb",
+    "latestReadyRevisionName": "lucid-api-server-00230-gbb",
+    "observedGeneration": 231,
+    "traffic": [
+      {
+        "latestRevision": true,
+        "percent": 100,
+        "revisionName": "lucid-api-server-00230-gbb"
+      }
+    ],
+    "url": "https://lucid-api-server-delggdwi6q-nw.a.run.app"
+  }
+}
